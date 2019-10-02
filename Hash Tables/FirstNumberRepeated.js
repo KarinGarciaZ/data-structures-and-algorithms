@@ -44,3 +44,20 @@ for (let i = 0; i < arr1.length; i++) {
 
   myHashTable.set(arr1[i], arr1[i])
 }
+
+/*--------------------------SOLUTION 2---------------------------- */
+
+const returnRepeated = arr => {
+  let map = {}
+
+  for (let i = 0; i < arr.length; i++) {
+    if ( map[arr[i]] || (typeof(map[arr[i]]) === 'number') ) 
+      return arr[i]
+      
+    map[arr[i]] = arr[i]    
+  }  
+
+  return undefined
+}
+
+console.log(returnRepeated(arr1))
