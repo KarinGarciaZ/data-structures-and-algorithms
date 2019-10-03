@@ -8,7 +8,7 @@ return [0, 1].
 
 //O(n)
 const twoSum = (nums, target) => {
-  let values = []
+  let values = {}
 
   for (let i = 0; i < nums.length; i++) {
 
@@ -16,12 +16,10 @@ const twoSum = (nums, target) => {
     let difference = target - element
     
     if ( values[difference] !== undefined )
-      return [values[difference][0], i]
+      return [values[difference], i]
 
-    if ( values[element] === undefined ) {
-      values[element] = []
-      values[element].push(i)
-    }
+    if ( values[element] === undefined )
+      values[element] = i  
 
   }
 };
