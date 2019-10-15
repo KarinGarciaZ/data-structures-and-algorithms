@@ -31,11 +31,22 @@ class LinkedList {
     return this 
   }
 
-  insertFromHead(index, value) {
-    const newNode = new Node(value)
-    let currentNode= this.traverseToIndex(index)    
-    let lastNode = currentNode.previous
+  insert(index, value) {
+    if ( index >= this.length )
+      return this.append(value)
 
+    if ( index <= 0 )
+      return this.prepend(value)
+
+    let currentNode = null
+
+    if ( index < this.length/2 )
+      currentNode= this.traverseToIndexFromHead(index)
+    else
+      currentNode = this.traverseToIndexFromTail(index)
+
+    const newNode = new Node(value) 
+    let lastNode = currentNode.previous
     lastNode.next = newNode    
     newNode.previous = lastNode
     newNode.next = currentNode
@@ -43,8 +54,38 @@ class LinkedList {
     this.length++
     return this
   }
+
+  remove(index) {
+    if ( index <= 0 ) {
+      this.head = this.head.next
+      this.head.previous = null
+      this.length--
+      return this
+    }    
+
+    if ( index >= this.length - 1 ) {
+      this.tail = this.tail.previous
+      this.tail.next = null
+      this.length--
+      return this
+    }  
+
+    let currentNode = null
+
+    if ( index < this.length/2 )
+      currentNode = this.traverseToIndexFromHead(index)
+    else
+      currentNode = this.traverseToIndexFromTail(index)
+
+    let previousNode = currentNode.previous
+    let nextNode = currentNode.next
+    previousNode.next = nextNode
+    nextNode.previous = previousNode
+    this.length--
+    return this
+  }
   
-  traverseToIndex(index) {
+  traverseToIndexFromHead(index) {
     let i = 0
     let currentNode = this.head
     while( i !== index ) {
@@ -54,21 +95,14 @@ class LinkedList {
     return currentNode
   }
 
-  insertFromTail(index, value) {
-
-  }
-
-  insert(index, value) {
-    if ( index >= this.length )
-      return this.append(value)
-
-    if ( index <= 0 )
-      return this.prepend(value)
-
-    if ( index < this.length/2 )
-      return this.insertFromHead(index, value)
-    else
-      return this.insertFromTail(index, value)
+  traverseToIndexFromTail(index) {
+    let i = this.length - 1
+    let currentNode = this.tail
+    while( i !== index ) {
+      currentNode = currentNode.previous
+      i--
+    }
+    return currentNode
   }
 
   printList() {
@@ -86,5 +120,8 @@ const myLinkedList = new LinkedList(10)
 myLinkedList.append(5)
 myLinkedList.prepend(2)
 myLinkedList.insert(1, 3)
+myLinkedList.insert(1, 11)
+myLinkedList.remove(0)
+
 
 console.log(myLinkedList.printList())
