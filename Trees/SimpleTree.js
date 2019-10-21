@@ -37,12 +37,35 @@ class Tree {
       }
     }
   }
+
+  lookup(value) {
+    if (!this.root) return false
+
+    let currentNode = this.root
+    while(currentNode) {
+      if( value === currentNode.value ) 
+        return currentNode
+
+      if(value < currentNode.value) 
+        currentNode = currentNode.left
+      else
+        currentNode = currentNode.right
+    }
+
+    return false
+  }
 }
 
 let tree = new Tree()
 tree.insert(9)
 tree.insert(4)
 tree.insert(6)
+tree.insert(20)
+tree.insert(15)
+tree.insert(170)
+tree.insert(1)
+
+console.log(JSON.stringify(tree.lookup(17410)))
 
 console.log(JSON.stringify(tree.root))
 
