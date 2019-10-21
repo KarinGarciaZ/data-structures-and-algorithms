@@ -54,6 +54,20 @@ class Tree {
 
     return false
   }
+
+  remove(value) {
+    let currentNode = this.root
+    while(currentNode) {
+      if( value === currentNode.value ) {
+        //TODO
+      }
+
+      if(value < currentNode.value) 
+        currentNode = currentNode.left
+      else
+        currentNode = currentNode.right
+    }
+  }
 }
 
 let tree = new Tree()
