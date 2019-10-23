@@ -55,12 +55,60 @@ class Tree {
     return false
   }
 
+  //My implementation of remove
   remove(value) {
     let currentNode = this.root
-    while(currentNode) {
-      if( value === currentNode.value ) {
-        //TODO
+    let prevNode = this.root
+
+    while(currentNode) {   
+      if( value === currentNode.value ) {        
+        let LR = (currentNode.value > prevNode.value)? 'right' : 'left'
+        let nodeToUse
+
+        //When the node is a leaf
+        if( !currentNode.left && !currentNode.right )
+          prevNode[LR] = null
+
+        //Get lowest number from right direction
+        if( currentNode.right ) {
+          nodeToUse = currentNode.right
+          let prevNodeToUSe
+
+          if( nodeToUse.left ) {
+            while( nodeToUse.left ) {            
+              prevNodeToUSe = nodeToUse
+              nodeToUse = nodeToUse.left
+            }
+            currentNode.value = nodeToUse.value
+            prevNodeToUSe.left = nodeToUse.right
+          } else {
+            currentNode.value = nodeToUse.value
+            currentNode.right = nodeToUse.right
+          }
+        }
+        
+        //Get greatest number from left direction if there's not right direction
+        if( currentNode.left && !currentNode.right ) {
+          nodeToUse = currentNode.left
+          let prevNodeToUSe
+
+          if( nodeToUse.right ) {
+            while( nodeToUse.right ) {            
+              prevNodeToUSe = nodeToUse
+              nodeToUse = nodeToUse.right
+            }
+            currentNode.value = nodeToUse.value
+            prevNodeToUSe.left = nodeToUse.right
+          } else {
+            currentNode.value = nodeToUse.value
+            currentNode.right = nodeToUse.left
+          }
+        }
+
+        return this
       }
+
+      prevNode = currentNode
 
       if(value < currentNode.value) 
         currentNode = currentNode.left
@@ -71,15 +119,30 @@ class Tree {
 }
 
 let tree = new Tree()
-tree.insert(9)
-tree.insert(4)
-tree.insert(6)
-tree.insert(20)
-tree.insert(15)
-tree.insert(170)
+tree.insert(40)
+tree.insert(5)
+tree.insert(3)
 tree.insert(1)
+tree.insert(4)
+tree.insert(18)
+tree.insert(16)
+tree.insert(17)
+tree.insert(13)
+tree.insert(12)
+tree.insert(15)
+tree.insert(9)
+tree.insert(10)
+tree.insert(11)
+tree.insert(16)
+tree.insert(14)
+tree.insert(19)
+tree.insert(25)
+tree.insert(23)
+tree.insert(24)
 
-console.log(JSON.stringify(tree.lookup(17410)))
+tree.remove(19)
+
+console.log(JSON.stringify(tree.lookup(5)))
 
 console.log(JSON.stringify(tree.root))
 
