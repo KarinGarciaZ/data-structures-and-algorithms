@@ -13,7 +13,7 @@ let fibonacciIterative = n => {
   return prev
 }
 
-
+//recurtion implementation
 let fibonacciRecurtion = n => {
   if( n < 2 ) return n
   return fibonacciRecurtion(n-1) + fibonacciRecurtion(n-2)
