@@ -116,6 +116,77 @@ class Tree {
         currentNode = currentNode.right
     }
   }
+
+  breathFirstSearch() {
+    let current = this.root
+    let list = []
+    let queue = []
+    queue.push(current)
+    
+    while(queue.length) {
+      current = queue.shift()
+      list.push(current.value)
+      if( current.left )
+        queue.push(current.left)
+      if( current.right )
+        queue.push( current.right )
+    }
+
+    return list
+  }
+
+  breathFirstSearchRecursive( list, queue ) {
+    if( !queue.length )
+      return list
+
+    let current = queue.shift()
+    list.push(current.value)
+    if( current.left )
+      queue.push(current.left)
+    if( current.right )
+      queue.push( current.right )
+
+    return this.breathFirstSearch(list, queue)
+  }
+
+  depthFirstSearchInorder() {
+    let list = []
+    let traverse = node => {
+      if(!node) return
+
+      traverse(node.left)
+      list.push(node.value)
+      traverse(node.right)
+    }
+    traverse(this.root)
+    return list
+  }
+
+  depthFirstSearchPreorder() {
+    let list = []
+    let traverse = node => {
+      if(!node) return
+
+      list.push(node.value)
+      traverse(node.left)
+      traverse(node.right)
+    }
+    traverse(this.root)
+    return list
+  }
+
+  depthFirstSearchPostorder() {
+    let list = []
+    let traverse = node => {
+      if(!node) return
+
+      traverse(node.left)
+      traverse(node.right)
+      list.push(node.value)
+    }
+    traverse(this.root)
+    return list
+  }
 }
 
 let tree = new Tree()
@@ -142,7 +213,12 @@ tree.insert(24)
 
 tree.remove(19)
 
-console.log(JSON.stringify(tree.lookup(5)))
+console.log(tree.breathFirstSearch())
+console.log(tree.breathFirstSearchRecursive([], [tree.root]))
+console.log(tree.depthFirstSearchInorder())
+console.log(tree.depthFirstSearchPreorder())
+console.log(tree.depthFirstSearchPostorder())
+//console.log(JSON.stringify(tree.lookup(5)))
 
-console.log(JSON.stringify(tree.root))
+//console.log(JSON.stringify(tree.root))
 
