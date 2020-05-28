@@ -44,3 +44,23 @@ var isPalindrome = function(head) {
 
     return returning
 };
+
+var isPalindrome = function(head) {
+  let isPalindrome = true
+  
+  const trav = n => {
+    if (!n) return null
+    
+    trav(n.next)
+    
+    if(isPalindrome) {
+      if(head.val === n.val)
+        head = head.next;
+      else
+        isPalindrome = false 
+    }
+  }
+  trav(head)
+  
+  return isPalindrome
+};
